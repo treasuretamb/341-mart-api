@@ -4,8 +4,10 @@ const passport = require('passport');
 const dotenv = require('dotenv');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
+const authRoutes = require('./routes/auth');
 
 dotenv.config();
+require('./config/passport');
 const app = express();
 
 // Middleware
@@ -37,6 +39,7 @@ const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Routes
+app.use('/auth', authRoutes);
 app.get('/', (req, res) => res.send('EasyStoreAPI is running'));
 
 const PORT = process.env.PORT || 3000;
